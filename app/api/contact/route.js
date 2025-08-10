@@ -59,13 +59,54 @@
 //   }
 // }
 
+// import { NextResponse } from "next/server";
+// import { Resend } from "resend";
+
+// export async function POST(req) {
+//   // Prevent build crash if key is missing
+//   if (!process.env.RESEND_API_KEY) {
+//     console.error("Missing RESEND_API_KEY environment variable");
+//     return NextResponse.json(
+//       { error: "Email service not configured" },
+//       { status: 500 }
+//     );
+//   }
+
+//   const resend = new Resend(process.env.RESEND_API_KEY);
+
+//   try {
+//     const { name, email, message } = await req.json();
+
+//     const data = await resend.emails.send({
+//       from: `${name} <onboarding@resend.dev>`, // Use your verified domain if available
+//       to: ["shubhamkumar13504@gmail.com"], // keep your working recipient
+//       subject: `New message from ${name}`,
+//       reply_to: email,
+//       text: `
+// You received a new message from your contact form.
+
+// Name: ${name}
+// Email: ${email}
+// Message: ${message}
+//       `,
+//     });
+
+//     return NextResponse.json({ success: true, data });
+//   } catch (error) {
+//     console.error(error);
+//     return NextResponse.json(
+//       { success: false, error: error.message },
+//       { status: 500 }
+//     );
+//   }
+// }
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
 export async function POST(req) {
-  // Prevent build crash if key is missing
+  // Check API key
   if (!process.env.RESEND_API_KEY) {
-    console.error("Missing RESEND_API_KEY environment variable");
+    console.error("❌ Missing RESEND_API_KEY environment variable");
     return NextResponse.json(
       { error: "Email service not configured" },
       { status: 500 }
@@ -77,9 +118,11 @@ export async function POST(req) {
   try {
     const { name, email, message } = await req.json();
 
-    const data = await resend.emails.send({
+    console.log("📩 Sending email with data:", { name, email, message });
+
+    const response = await resend.emails.send({
       from: `${name} <onboarding@resend.dev>`, // Use your verified domain if available
-      to: ["shubhamkumar13504@gmail.com"], // keep your working recipient
+      to: ["shubhamkumar13504@gmail.com"], // Replace with your recipient
       subject: `New message from ${name}`,
       reply_to: email,
       text: `
@@ -91,11 +134,13 @@ Message: ${message}
       `,
     });
 
-    return NextResponse.json({ success: true, data });
+    console.log("✅ Resend API response:", response);
+
+    return NextResponse.json({ success: true, data: response });
   } catch (error) {
-    console.error(error);
+    console.error("❌ Email send failed:", error); // Log the full error object
     return NextResponse.json(
-      { success: false, error: error.message },
+      { error: error?.message || "Failed to send email", details: error },
       { status: 500 }
     );
   }
