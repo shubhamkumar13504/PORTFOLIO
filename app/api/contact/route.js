@@ -63,7 +63,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
 export async function POST(req) {
-  // Check if API key exists
+  // Prevent build crash if key is missing
   if (!process.env.RESEND_API_KEY) {
     console.error("Missing RESEND_API_KEY environment variable");
     return NextResponse.json(
@@ -77,33 +77,25 @@ export async function POST(req) {
   try {
     const { name, email, message } = await req.json();
 
-    // await resend.emails.send({
-    //   from: "Your Name <you@yourdomain.com>",
-    //   to: "your@email.com",
-    //   subject: `Contact from ${name}`,
-    //   text: `Email: ${email}\n\nMessage:\n${message}`,
-    // });
-
-    // return NextResponse.json({ success: true });
     const data = await resend.emails.send({
-      from: `${name} <onboarding@resend.dev>`, // or use your verified domain
-      to: ["shubhamkumar13504@gmail.com"],
+      from: `${name} <onboarding@resend.dev>`, // Use your verified domain if available
+      to: ["shubhamkumar13504@gmail.com"], // keep your working recipient
       subject: `New message from ${name}`,
-      reply_to: email, // Enables "Reply" to go to sender
+      reply_to: email,
       text: `
-      You received a new message from your contact form.
+You received a new message from your contact form.
 
-      Name: ${name}
-      Email: ${email}
-      Message: ${message}
+Name: ${name}
+Email: ${email}
+Message: ${message}
       `,
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, data });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { error: "Failed to send email" },
+      { success: false, error: error.message },
       { status: 500 }
     );
   }
