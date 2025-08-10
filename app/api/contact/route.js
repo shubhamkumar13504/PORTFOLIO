@@ -25,32 +25,63 @@
 //   }
 // }
 // app/api/contact/route.ts (for TypeScript) or route.js (for JS)
-import { Resend } from 'resend';
-import { NextResponse } from 'next/server';
+// import { Resend } from 'resend';
+// import { NextResponse } from 'next/server';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// const resend = new Resend(process.env.RESEND_API_KEY);
+
+// export async function POST(req) {
+//   const { name, email, message } = await req.json();
+
+//   try {
+//     const data = await resend.emails.send({
+//       from: `${name} <onboarding@resend.dev>`, // or use your verified domain
+//       to: ['shubhamkumar13504@gmail.com'],
+//       subject: `New message from ${name}`,
+//       reply_to: email, // Enables "Reply" to go to sender
+//       text: `
+// You received a new message from your contact form.
+
+// Name: ${name}
+// Email: ${email}
+// Message: ${message}
+//       `
+//     });
+
+//     return NextResponse.json({ success: true });
+//   } catch (error) {
+//     console.error(error);
+//     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+//   }
+// }
+import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
 export async function POST(req) {
-  const { name, email, message } = await req.json();
+  // Check if API key exists
+  if (!process.env.RESEND_API_KEY) {
+    console.error("Missing RESEND_API_KEY environment variable");
+    return NextResponse.json(
+      { error: "Email service not configured" },
+      { status: 500 }
+    );
+  }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   try {
-    const data = await resend.emails.send({
-      from: `${name} <onboarding@resend.dev>`, // or use your verified domain
-      to: ['shubhamkumar13504@gmail.com'],
-      subject: `New message from ${name}`,
-      reply_to: email, // Enables "Reply" to go to sender
-      text: `
-You received a new message from your contact form.
+    const { name, email, message } = await req.json();
 
-Name: ${name}
-Email: ${email}
-Message: ${message}
-      `
+    await resend.emails.send({
+      from: "Your Name <you@yourdomain.com>",
+      to: "your@email.com",
+      subject: `Contact from ${name}`,
+      text: `Email: ${email}\n\nMessage:\n${message}`,
     });
 
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
   }
 }
