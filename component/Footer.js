@@ -10,7 +10,7 @@ function Footer() {
       <img src="/l.png" alt="gitID" className='h-10 w-10 transition duration-300 hover:scale-110 hover:drop-shadow-[0_0_6px_#00f6ff]' />
       </a>
       <a href="https://github.com/shubhamkumar13504/" target="_blank" rel="noopener noreferrer">
-      <img src="/giti.png" alt="gitID" className='h-10 w-10 transition duration-300 hover:scale-110 hover:drop-shadow-[0_0_6px_#00f6ff]' />
+      <img src="/g123.png" alt="gitID" className='h-10 w-10 transition duration-300 hover:scale-110 hover:drop-shadow-[0_0_6px_#00f6ff]' />
       </a>
       <a href="https://www.linkedin.com/in/shubham-kumar13504" target="_blank" rel="noopener noreferrer">
       <img src="/li.png" alt="gitID" className='h-10 w-10 transition duration-300 hover:scale-110 hover:drop-shadow-[0_0_6px_#00f6ff]' />
