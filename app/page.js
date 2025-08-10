@@ -58,7 +58,7 @@ export default function Home() {
             Shubham Kumar
           </div>
           <div className="text-lg sm:text-xl text-cyan-400 mt-2">
-            I'M A{" "}
+            I&apos;M A{" "}
             <Typewriter
               words={[
                 "FULL STACK DEVELOPER",
