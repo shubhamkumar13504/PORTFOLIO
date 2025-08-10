@@ -40,7 +40,7 @@ export default function Home() {
             className={`${inter.className} text-center sm:text-left sm:text-lg md:text-xl font-light space-y-4 flex flex-col text-white`}
           >
             <p>
-              I'm a full-stack developer specializing in building scalable and high-performance web applications with React and Next.js. With a strong foundation in front-end architecture and backend integration, I craft clean, maintainable code and deliver user-focused solutions.
+              I&apos;m a full-stack developer specializing in building scalable and high-performance web applications with React and Next.js. With a strong foundation in front-end architecture and backend integration, I craft clean, maintainable code and deliver user-focused solutions.
             </p>
            
           </div>

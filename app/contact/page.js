@@ -2,7 +2,7 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
-function page() {
+function Page() {
   // const boxRef = useRef(null);
   const [clutter, setClutter] = useState([]);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -121,4 +121,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

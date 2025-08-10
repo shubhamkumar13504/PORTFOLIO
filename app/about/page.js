@@ -11,10 +11,10 @@ function Page() {
       {/* === Left: Introduction === */}
       <div className="w-full md:w-1/2 text-left space-y-4">
         <h1 className="text-3xl md:text-4xl font-bold text-white">
-          Hi, I'm SHUBHAM KUMAR
+          Hi, I&apos;m SHUBHAM KUMAR
         </h1>
         <p className="text-gray-300 text-base md:text-lg">
-          I'm a passionate front-end developer with experience in React,
+          I&apos;m a passionate front-end developer with experience in React,
           Next.js, and building beautiful, responsive UIs.
         </p>
         <p className="text-gray-400 text-sm">
